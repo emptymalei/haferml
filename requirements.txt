@@ -1,0 +1,6 @@
+pandas>=1.2.0
+scipy>=1.2.1
+fuzzywuzzy>=0.17.0
+loguru>=0.5.3
+click>=7.1.2
+simplejson>=3.17.2

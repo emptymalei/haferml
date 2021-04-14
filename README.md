@@ -1,2 +1,6 @@
-# haferml
-the HomemAde FramEwoRk for Machine Learning
+# Hafer ML
+
+The HomemAde FramEwoRk for Machine Learning (HAFER ML).
+
+
+
