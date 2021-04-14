@@ -1,5 +1,5 @@
 import pandas as pd
-from haferml.data.preprocessing.ingredients import OrderedProcessor, attributes
+from haferml.preprocess.ingredients import OrderedProcessor, attributes
 from loguru import logger
 
 
@@ -146,9 +146,7 @@ class BasePreProcessor(OrderedProcessor):
         # Go through the transforms
         for t in self.transforms:
             logger.info(f"Performing {t} ...")
-
             self.transforms[t](dataframe)
-
             logger.info(f"{t} is done.")
 
         return dataframe
@@ -156,7 +154,7 @@ class BasePreProcessor(OrderedProcessor):
 
 if __name__ == "__main__":
 
-    from haferml.data.preprocessing.ingredients import attributes
+    from haferml.preprocess.ingredients import attributes
 
     class DemoPreProcessor(BasePreProcessor):
         def __init__(self, config, columns, cutoff_timestamp=None):

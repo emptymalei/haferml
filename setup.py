@@ -3,7 +3,7 @@ from setuptools import setup as _setup
 
 from haferml.version import __version__
 
-PACKAGE_NAME = "hafer"
+PACKAGE_NAME = "haferml"
 PACKAGE_VERSION = __version__
 PACKAGE_DESCRIPTION = "HAFER ML, the homemade framework for machine learning"
 PACKAGE_LONG_DESCRIPTION = (
