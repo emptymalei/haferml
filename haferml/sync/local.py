@@ -1,7 +1,7 @@
 import json
 import os
 
-from haferml.data.wrangling.misc import (
+from haferml.data.wrangle.misc import (
     get_value_in_dict_recursively as _get_value_in_dict_recursively,
 )
 from loguru import logger
