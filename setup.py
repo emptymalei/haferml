@@ -6,9 +6,7 @@ from haferml.version import __version__
 PACKAGE_NAME = "haferml"
 PACKAGE_VERSION = __version__
 PACKAGE_DESCRIPTION = "HAFER ML, the homemade framework for machine learning"
-PACKAGE_LONG_DESCRIPTION = (
-    "HAFER ML, the homemade framework for machine learning, is a simple and unambitious framework for small machine learning projects, with reproducibility in mind."
-)
+PACKAGE_LONG_DESCRIPTION = "HAFER ML, the homemade framework for machine learning, is a simple and unambitious framework for small machine learning projects, with reproducibility in mind."
 PACKAGE_URL = "https://github.com/emptymalei/haferml"
 
 

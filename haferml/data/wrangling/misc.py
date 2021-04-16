@@ -1,6 +1,5 @@
 from ast import literal_eval
 
-import numpy as np
 from loguru import logger
 
 
@@ -60,48 +59,6 @@ def get_value_in_dict_recursively(dictionary, path, ignore_path_fail=None):
         except TypeError:
             logger.error(f"TypeError: Could not find {path_temp[0]}")
             return None
-
-
-#################
-# Outlier
-#################
-
-
-def remove_outliers(dataset, criteria=None):
-    """
-    remove_outliers will filter out the outliers of dataset
-
-    Changes will be made to original dataset.
-
-    :param dataset: dataframe that contains the data to be filtered
-    """
-    logger.info("Removing outliers ... ")
-    if criteria is None:
-        criteria = {"target": {"quantile_range": [0.01, 0.99]}}
-
-    for col in criteria:
-        if col not in dataset.columns:
-            logger.warning(f"Column {col} is not in dataset ({dataset.columns})")
-            continue
-        # Remove isna if required in criteria
-        col_isna = criteria[col].get("isna", False)
-        if col_isna:
-            dataset = dataset.loc[~dataset[col].isna()]
-
-        # only use between values
-        col_range = criteria[col].get("range", [-np.inf, np.inf])
-        col_quantile_range = criteria[col].get("quantile_range", ())
-        if col_quantile_range:
-            col_range_from_quantile_lower = dataset[col].quantile(col_quantile_range[0])
-            col_range_from_quantile_upper = dataset[col].quantile(col_quantile_range[1])
-            if col_range_from_quantile_lower >= col_range[0]:
-                col_range[0] = col_range_from_quantile_lower
-            if col_range_from_quantile_upper <= col_range[1]:
-                col_range[1] = col_range_from_quantile_upper
-
-        dataset = dataset.loc[dataset[col].between(*col_range)]
-
-    logger.info("Removed outliers!")
 
 
 ###############

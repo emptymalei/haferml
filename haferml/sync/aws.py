@@ -1,5 +1,6 @@
 import os
 from awscli.clidriver import create_clidriver
+import boto3
 
 
 def aws_cli(*cmd):
@@ -42,3 +43,29 @@ def aws_cli(*cmd):
     finally:
         os.environ.clear()
         os.environ.update(old_env)
+
+
+def s3_download(path, folder):
+    """
+    s3_download downloads
+
+    > s3_download(config_path, base_folder)
+
+    :param path: s3 uri
+    :type path: str
+    :param folder: destination folder
+    :type folder: str
+    """
+
+    if not path.startswith("s3://"):
+        raise Exception(f"{path} is not S3 uri!")
+    else:
+        # e.g., s3://mein-work/abc/performance/model_performance_log.json
+        s3_bucket = path.split("/")[2]
+        s3_filepath = "/".join(path.split("/")[3:])
+        # get the name of the config file
+        s3_filename = path.split("/")[-1]
+        # local config path is constructed from base folder and filename
+        path = os.path.join(folder, s3_filename)
+        s3 = boto3.client("s3")
+        s3.download_file(s3_bucket, s3_filepath, path)

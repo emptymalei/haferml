@@ -1,18 +1,15 @@
 import json
 import os
+import datetime
+import numpy as np
 
-from haferml.data.wrangle.misc import (
-    get_value_in_dict_recursively as _get_value_in_dict_recursively,
-)
 from loguru import logger
 
 
-def prepare_folders(base_folder, folder_list=None):
+def prepare_folders(folder_list=None, base_folder=None):
     """
     prepare_folders creates the necessary folders
 
-    :param config: configurations of the model
-    :type config: dict
     :param base_folder: base folder of the whole project
     :type base_folder: str
     :param folder_list: list of folders to create, relative to base_folder
@@ -28,7 +25,7 @@ def prepare_folders(base_folder, folder_list=None):
     if isinstance(folder_list, (tuple, list, set)):
         pass
     elif isinstance(folder_list, str):
-        logger.warning(f"Converting folder list: {folder_list} to a list")
+        logger.warning(f"Converting to list: {folder_list} to a list")
         folder = [folder_list]
 
     for folder in folder_list:
@@ -36,6 +33,25 @@ def prepare_folders(base_folder, folder_list=None):
         if not os.path.exists(folder):
             os.makedirs(folder)
             logger.info(f"created {folder}")
+
+
+def isoencode(obj):
+    """
+    isoencode decodes many different objects such as
+    np.bool -> regular bool
+    """
+    if isinstance(obj, datetime.datetime):
+        return obj.isoformat()
+    if isinstance(obj, datetime.date):
+        return obj.isoformat()
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.int64):
+        return int(obj)
+    if isinstance(obj, np.float64):
+        return float(obj)
+    if isinstance(obj, np.bool_):
+        return bool(obj)
 
 
 def save_records(data_inp, output, is_flush=None, write_mode=None):
@@ -90,61 +106,3 @@ def load_records(data_path_inp):
             data.append(line_data)
 
     return data
-
-
-class LocalStorage:
-    """A model for local storage"""
-
-    def __init__(self, target):
-        self.target = target
-        self.records = []
-
-    def load_records(self, keep_in_memory=True):
-        """Load records for target"""
-
-        all_records = load_records(self.target)
-        if keep_in_memory:
-            self.records = all_records
-
-        return all_records
-
-    def is_in_storage(self, record_identifier, record_identifier_lookup_paths):
-        """Check if the record is already in storage"""
-        if isinstance(record_identifier_lookup_paths, str):
-            record_identifier_lookup_paths = [record_identifier_lookup_paths]
-
-        if not isinstance(record_identifier, str):
-            logger.warning("Input data is not string")
-            try:
-                record_identifier = str(record_identifier)
-            except Exception as ee:
-                logger.error(
-                    f"Could not convert input {record_identifier} to string! {ee}"
-                )
-                return {"exists": False, "record": None}
-
-        record_identifier = record_identifier.lower()
-
-        if not self.records:
-            all_existing_records = self.load_records()
-        all_existing_records = self.records
-
-        for record in all_existing_records:
-            for record_identifier_lookup_path in record_identifier_lookup_paths:
-                record_company = _get_value_in_dict_recursively(
-                    record, record_identifier_lookup_path
-                )
-                if record_company:
-                    record_company = record_company.lower()
-                    if record_identifier == record_company:
-                        return {"exists": True, "record": record}
-
-        return {"exists": False, "record": None}
-
-    def save_records(self, record):
-        """Save records in target"""
-        company = record.get("company")
-
-        if self.is_in_storage(company).get("exists"):
-            logger.debug(f"{company} already exists! No need to save again!")
-        save_records(record, self.target, is_flush=True)

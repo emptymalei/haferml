@@ -70,13 +70,11 @@ nav:
   - "Home": index.md
   - "Tutorials": tutorials/index.md
   - References:
+    - "References": references/index.md
     - "Data":
       - "Data": references/data/index.md
-      - "Analyze":
-        - references/data/analyze/index.md
-        - "Describe": references/data/analyze/describe.md
       - "Wrangle":
-        - references/data/wrangle/index.md
+        - "Wrangle": references/data/wrangle/index.md
         - "Datetime": references/data/wrangle/datetime.md
         - "JSON": references/data/wrangle/json.md
         - "MISC": references/data/wrangle/misc.md

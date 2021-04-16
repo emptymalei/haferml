@@ -10,3 +10,4 @@ mkdocs-material>=>=0.4.4: docs
 colorama>=0.4.4: docs
 requests>=2.25.1: docs
 awscli>=1.19.50: aws
+boto3>=1.17.51: aws
