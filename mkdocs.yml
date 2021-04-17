@@ -104,9 +104,11 @@ nav:
       - "sync.aws": references/sync/aws.md
       - "sync.local": references/sync/local.md
     - "Blend":
-      - "Blend": references/blend/index.md
+      # - "Blend": references/blend/index.md
+      - "blend.config": references/blend/config.md
     - "Utils":
-      - "Utils": references/utils/index.md
+      # - "Utils": references/utils/index.md
+      - "utils.sugar": references/utils/sugar.md
     - "Lab":
       - "Lab": references/lab/index.md
 
