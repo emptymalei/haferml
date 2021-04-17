@@ -18,4 +18,5 @@ jobs:
       - run: pip install mkdocs-material-extensions
       - run: pip install mkdocs-autorefs
       - run: pip install mkdocstrings
+      - run: python setup.py install
       - run: mkdocs gh-deploy --force
