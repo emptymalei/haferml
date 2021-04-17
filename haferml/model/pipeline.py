@@ -123,7 +123,6 @@ class ModelSetX(ModelSet):
         ...
 
 
-
 class ModelWorkflowX(ModelWorkflow):
     """ModelWorkflowX class that holds DataSetX and ModelSetX
 

@@ -32,4 +32,3 @@ class ModelSet:
         `hyperparameters` specifies the hyperparameters. This is a property.
         """
         ...
-

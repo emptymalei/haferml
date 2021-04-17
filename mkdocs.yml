@@ -4,7 +4,7 @@ site_author: L Ma
 site_description: "HAFER ML"
 site_url: "https://emptymalei.github.io/haferml"
 repo_url: "https://github.com/emptymalei/haferml"
-edit_uri: "blob/gh-pages/docs/"
+edit_uri: "blob/master/docs/"
 repo_name: "emptymalei/haferml"
 
 
