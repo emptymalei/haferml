@@ -37,8 +37,12 @@ def prepare_folders(folder_list=None, base_folder=None):
 
 def isoencode(obj):
     """
-    isoencode decodes many different objects such as
-    np.bool -> regular bool
+    isoencode decodes many different objects such as np.bool -> regular bool.
+
+    ```python
+    with open(log_file_path, "a+") as fp:
+        json.dump(self.report, fp, default=isoencode)
+    ```
     """
     if isinstance(obj, datetime.datetime):
         return obj.isoformat()

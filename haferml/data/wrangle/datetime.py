@@ -5,11 +5,6 @@ import dateutil
 import pandas as pd
 
 
-##################
-# Datetime Related
-##################
-
-
 def convert_to_datetime(input_date, dayfirst=None, input_tz=None, output_tz=None):
     """
     Convert input to *datetime* object.
@@ -18,10 +13,14 @@ def convert_to_datetime(input_date, dayfirst=None, input_tz=None, output_tz=None
     1. datetime.datetime
     2. str
     3. float or int
+
+    ```
     >>> handle_strange_dates(1531323212311)
     datetime(2018, 7, 11, 17, 33, 32, 311000)
     >>> handle_strange_dates(datetime(2085,1,1))
     datetime(2050, 1, 1)
+    ```
+
     :param input_date: input data of any possible format
     :param input_tz: input timezone, defaults to utc
     :param output_tz: output timezone, defaults to utc

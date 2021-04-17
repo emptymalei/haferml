@@ -2,7 +2,7 @@ import inspect
 import re
 import time
 
-import haferml.data.wrangling as wlg
+import haferml.data.wrangle as wlg
 import pandas as pd
 from loguru import logger
 

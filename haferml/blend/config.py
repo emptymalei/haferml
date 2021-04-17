@@ -35,8 +35,10 @@ def get_config(configs, path):
     :param dict configs: input dictionary
     :param list path: path to the value to be obtained
 
+    ```
     >>> get_config({'etl':{'raw':{'local':'data/raw', 'remote': 's3://haferml-tutorials/rideindego/marshall/data/raw'}}},['etl','raw'])
     {'local':'data/raw', 'remote': 's3://haferml-tutorials/rideindego/marshall/data/raw'}
+    ```
     """
 
     # Construct the path

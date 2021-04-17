@@ -7,25 +7,25 @@ def aws_cli(*cmd):
     """
     aws_cli invokes the aws cli processes in python to execute awscli commands.
 
-    .. warning::
+    !!! warning
         This is not the most elegant way of using awscli.
         However, it has been a convinient function in data science projects.
 
+        This function is adapted from https://github.com/boto/boto3/issues/358#issuecomment-372086466
+
+
+    AWS credential env variables should be configured before calling this function.
+    The awscli command should be wrapped as a tuple. To download data from S3 to a local path, use
+
+    ```
+    >>> aws_cli(('s3', 'sync', 's3://s2-fpd/augmentation/', '/tmp/test'))
+    Similarly, upload is done in the following way
+    >>> # local_path = ''
+    >>> # remote_path = ''
+    >>> _aws_cli(('s3', 'sync', local_path, remote_path))
+    ```
+
     :param *cmd: tuple of awscli command.
-
-    .. admonition:: Examples
-       :class: info
-       AWS credential env variables should be configured before calling this function.
-       The awscli command should be wrapped as a tuple. To download data from S3 to a local path, use
-       >>> aws_cli(('s3', 'sync', 's3://s2-fpd/augmentation/', '/tmp/test'))
-       Similarly, upload is done in the following way
-       >>> # local_path = ''
-       >>> # remote_path = ''
-       >>> _aws_cli(('s3', 'sync', local_path, remote_path))
-
-    .. admonition:: References
-       :class: info
-       This function is adapted from https://github.com/boto/boto3/issues/358#issuecomment-372086466
     """
     old_env = dict(os.environ)
     try:
@@ -47,9 +47,11 @@ def aws_cli(*cmd):
 
 def s3_download(path, folder):
     """
-    s3_download downloads
+    `s3_download` downloads files from S3.
 
-    > s3_download(config_path, base_folder)
+    ```
+    >>> s3_download(config_path, base_folder)
+    ```
 
     :param path: s3 uri
     :type path: str

@@ -12,10 +12,12 @@ def get_value_in_dict_recursively(dictionary, path, ignore_path_fail=None):
 
     This function always returns the value or None.
 
+    ```
     >>> get_value_in_dict_recursively({'lvl_1':{'lvl_2':{'lvl_3':'lvl_3_value'}}},['lvl_1','lvl_3'])
     {'lvl_3':'lvl_3_value'}
     >>> get_value_in_dict_recursively({1:{2:{3:'hi'}}},[1,'2',3])
     {'hi'}
+    ```
     """
     if ignore_path_fail is None:
         ignore_path_fail = True

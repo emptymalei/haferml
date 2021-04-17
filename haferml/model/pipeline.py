@@ -6,35 +6,20 @@ from haferml.blend.config import construct_paths
 import joblib
 import simplejson as json
 from haferml.sync.local import isoencode
-
-
-class DataSet:
-    """
-    DataSet for the model
-    """
-
-    def __init__(self, config, base_folder):
-        self.config = config
-        self.base_folder = base_folder
-
-    def create_train_test_datasets(self):
-        ...
-
-    @staticmethod
-    def _save_data(dataframe, destination):
-        logger.debug(f"Saving data to {destination} ...")
-        dataframe.to_parquet(destination)
-
-    def _export_train_test_data(self):
-        """
-        _export_train_test_data saves train and test datasets
-        """
-        ...
+from haferml.model.dataset import DataSet
+from haferml.model.modelset import ModelSet
+from haferml.model.workflow import ModelWorkflow
 
 
 class DataSetX(DataSet):
     """
     DataSetX class deals with the dataset to be used in a model
+
+
+    :param config: a dictionary that contains the configurations.
+    :type config: dict
+    :param base_folder: working directory where all the artifacts are being perserved.
+    :type base_folder: str
     """
 
     def __init__(self, config, base_folder):
@@ -52,12 +37,23 @@ class DataSetX(DataSet):
 
         - self.data: the full input data right before train test split
         - self.X_train, self.y_train, self.X_test, self.y_test
+
+        :param dataframe: the dataframe to be splitted.
+        :type dataframe: pandas.DataFrame
         """
 
         raise Exception("create_train_test_dataset has not yet been implemented!")
 
     @staticmethod
     def _save_data(dataframe, destination):
+        """
+        `_save_data` saves the dataframe locally.
+
+        :param dataframe: dataframe to be saved
+        :type dataframe: pandas.DataFrame
+        :param destination: where the data is saved
+        :type destination: str
+        """
         logger.info("Export test and train data")
         dataframe.to_parquet(destination)
 
@@ -94,35 +90,14 @@ class DataSetX(DataSet):
         self._save_data(self.data, os.path.join(dataset_folder, "dataset.parquet"))
 
 
-class ModelSet:
-    """
-    ModelSet is the core of the model including hyperparameters
-    """
-
-    def __init__(self, config, base_folder):
-        self.config = config
-        self.base_folder = base_folder
-
-        logger.debug(
-            f"base folder: {self.base_folder}\n" f"artifacts configs: {self.artifacts}"
-        )
-
-    def create_model(self):
-        """
-        create_model here
-        """
-
-    @property
-    def hyperparameters(self):
-        """
-        hyperparameters specifies the hyperparameters
-        """
-        ...
-
-
 class ModelSetX(ModelSet):
     """
-    The core of the model including hyperparameters
+    The core of the model including hyperparameters.
+
+    :param config: a dictionary that contains the configurations.
+    :type config: dict
+    :param base_folder: working directory where all the artifacts are being perserved.
+    :type base_folder: str
     """
 
     def __init__(self, config, base_folder):
@@ -148,44 +123,19 @@ class ModelSetX(ModelSet):
         ...
 
 
-class ModelWorkflow:
-    """ModelWorkflow class that holds DataSet and ModelSet"""
-
-    def __init__(self, config, dataset, modelset, base_folder):
-        self.config = config
-        self.base_folder = base_folder
-        self.DataSet = dataset
-        self.ModelSet = modelset
-
-    def fit_and_report(self):
-        """
-        _fit_and_report fits the model using input data and generate reports
-        """
-        ...
-
-    def export_results(self):
-        """
-        export_results saves the necessary artifacts
-        """
-        ...
-
-    def train(self, dataset):
-        """
-        train connects the training workflow
-        """
-
-        logger.info("1. Create train test datasets")
-        self.DataSet.create_train_test_datasets(dataset)
-        logger.info("2. Create model")
-        self.ModelSet.create_model()
-        logger.info("3. Fit model and report")
-        self.fit_and_report()
-        logger.info("4. Export results")
-        self.export_results()
-
 
 class ModelWorkflowX(ModelWorkflow):
-    """ModelWorkflowX class that holds DataSetX and ModelSetX"""
+    """ModelWorkflowX class that holds DataSetX and ModelSetX
+
+    :param config: a dictionary that contains the configs.
+    :type config: dict
+    :param dataset: a DataSet object that contains the data and provides a `create_train_test_datasets` method.
+    :type dataset: haferml.model.DataSet
+    :param modelset: a ModelSet object that contains the model as well as the hyperparameters and a `create_model`.
+    :type modelset: haferml.model.ModelSet
+    :param base_folder: working directory where all the artifacts are being perserved.
+    :type base_folder: str
+    """
 
     def __init__(self, config, dataset, modelset, base_folder):
         self.config = config
@@ -230,10 +180,10 @@ class ModelWorkflowX(ModelWorkflow):
         if not os.path.exists(model_folder):
             os.makedirs(model_folder)
 
-        logger.info("Preserve models")
+        logger.info("Preserving models ...")
         joblib.dump(self.ModelSet.model, model_path)
 
-        logger.info("Perserve logs")
+        logger.info("Perserving logs ...")
         log_file_path = f"{model_path}.log"
         logger.info(f"Save log file to {log_file_path}")
         with open(log_file_path, "a+") as fp:
@@ -244,6 +194,9 @@ class ModelWorkflowX(ModelWorkflow):
     def train(self, dataset):
         """
         train connects the training workflow
+
+        :param dataset: dataframe being used to train the model
+        :type dataset: pandas.DataFrame
         """
 
         logger.info("1. Create train test datasets")

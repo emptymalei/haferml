@@ -60,8 +60,13 @@ plugins:
       handlers:
         python:
           setup_commands:
-          - import sys
-          - sys.path.append("docs")
+            - import sys
+            - sys.path.append("docs")
+          selection:
+            docstring_style: "restructured-text"
+            members: yes
+            filters:
+              - "^_[^_]"
       watch:
         - haferml
 
@@ -70,26 +75,38 @@ nav:
   - "Home": index.md
   - "Tutorials": tutorials/index.md
   - References:
-    - "References": references/index.md
+    - "Introduction": references/index.md
     - "Data":
-      - "Data": references/data/index.md
-      - "Wrangle":
-        - "Wrangle": references/data/wrangle/index.md
-        - "Datetime": references/data/wrangle/datetime.md
-        - "JSON": references/data/wrangle/json.md
-        - "MISC": references/data/wrangle/misc.md
+      # - "Data": references/data/index.md
+      - "data.wrangle":
+        # - "Wrangle": references/data/wrangle/index.md
+        - "data.wrangle.datetime": references/data/wrangle/datetime.md
+        - "data.wrangle.misc": references/data/wrangle/misc.md
     - "ETL":
-      - "ETL": references/etl/index.md
-      - "Extract": references/etl/extract/index.md
-      - "Transform":
-        - "Transform": references/etl/transform/index.md
-        - "Pipeline": references/etl/transform/pipeline.md
+      # - "ETL": references/etl/index.md
+      - "etl.extract": references/etl/extract/index.md
+      - "etl.transform":
+        # - "Transform": references/etl/transform/index.md
+        - "etl.transform.ingredients": references/etl/transform/ingredients.md
+        - "etl.transform.pipeline": references/etl/transform/pipeline.md
     - "Preprocess":
-      - "Preprocess": references/preprocess/index.md
-      - "Ingredients": references/preprocess/ingredients.md
-      - "Pipeline": references/preprocess/pipeline.md
+      # - "Preprocess": references/preprocess/index.md
+      - "preprocess.ingredients": references/preprocess/ingredients.md
+      - "preprocess.pipeline": references/preprocess/pipeline.md
+    - "Model":
+      # - "Model": references/model/index.md
+      - "model.dataset": references/model/dataset.md
+      - "model.modelset": references/model/modelset.md
+      - "model.workflow": references/model/workflow.md
+      - "model.pipeline": references/model/pipeline.md
     - "Sync":
-      - "Sync": references/sync/index.md
-      - "AWS": references/sync/aws.md
-      - "Local": references/sync/local.md
+      # - "Sync": references/sync/index.md
+      - "sync.aws": references/sync/aws.md
+      - "sync.local": references/sync/local.md
+    - "Blend":
+      - "Blend": references/blend/index.md
+    - "Utils":
+      - "Utils": references/utils/index.md
+    - "Lab":
+      - "Lab": references/lab/index.md
 
