@@ -1,12 +1,19 @@
+import os
+
 from setuptools import find_packages as _find_packages
 from setuptools import setup as _setup
 
 from haferml.version import __version__
 
+# read the contents of your README file
+__CWD__ = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(__CWD__, "README.md"), encoding="utf-8") as fp:
+    PACKAGE_LONG_DESCRIPTION = fp.read()
+
 PACKAGE_NAME = "haferml"
 PACKAGE_VERSION = __version__
-PACKAGE_DESCRIPTION = "HAFER ML, the homemade framework for machine learning"
-PACKAGE_LONG_DESCRIPTION = "HAFER ML, the homemade framework for machine learning, is a simple and unambitious framework for small machine learning projects, with reproducibility in mind."
+PACKAGE_DESCRIPTION = "HAFER ML, the homemade framework for machine learning."
+PACKAGE_LONG_DESCRIPTION = PACKAGE_LONG_DESCRIPTION
 PACKAGE_URL = "https://github.com/emptymalei/haferml"
 
 
@@ -56,8 +63,9 @@ def setup():
         version=PACKAGE_VERSION,
         description=PACKAGE_DESCRIPTION,
         long_description=PACKAGE_LONG_DESCRIPTION,
+        long_description_content_type='text/markdown',
         url=PACKAGE_URL,
-        author="Lei Ma",
+        author="L Ma",
         author_email="hi@leima.is",
         license="MIT",
         packages=_find_packages(exclude=("tests",)),
