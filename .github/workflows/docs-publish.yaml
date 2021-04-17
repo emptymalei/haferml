@@ -14,5 +14,5 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install mkdocs-material
-      - run: pip install autorefs
+      - run: pip install mkdocs-autorefs==0.1.1
       - run: mkdocs gh-deploy --force
