@@ -5,7 +5,7 @@
 # Reference: https://hanxiao.io/2019/11/07/A-Better-Practice-for-Managing-extras-require-Dependencies-in-Python/
 
 nose: tests
-mkdocstrings>=1.15.0: docs
+mkdocstrings>=0.15.0: docs
 mkdocs-material>=0.4.4: docs
 mkdocs-autorefs>=0.1.1: docs
 colorama>=0.4.4: docs
