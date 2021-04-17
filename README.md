@@ -17,6 +17,7 @@ pip install "haferml[all]"
 ```
 
 The extras options:
+
 - `all`: everything
 - `aws`: required if one needs AWS
 - `docs`: required to build the docs

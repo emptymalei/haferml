@@ -4,6 +4,24 @@ The HomemAde FramEwoRk for Machine Learning (HAFER ML).
 
 > Hafer is oat in German.
 
+## Install
+
+```
+pip install haferml
+```
+
+This will leave out many dependencies. To install all the requirements,
+
+```
+pip install "haferml[all]"
+```
+
+The extras options:
+
+- `all`: everything
+- `aws`: required if one needs AWS
+- `docs`: required to build the docs
+
 ## The Idea
 
 The Hafer ML frameworks is designed to be a minimal framework for data scientists. Hafer ML uses config files and saves the artifacts at every step reproducibility.
