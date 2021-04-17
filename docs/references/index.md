@@ -5,5 +5,3 @@ In this section, we provide the references for the Hafer ML codebase. For more d
 !!! warning
     This is still a WIP.
 
-    I am still improving the docstrings.
-
