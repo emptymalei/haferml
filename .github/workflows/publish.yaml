@@ -16,10 +16,12 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install from source (required for the pre-commit tests)
+        run: pip install ".[all]"
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          # python -m pip install --upgrade pip
+          # pip install -r requirements.txt
           # install black if available (Python 3.6 and above), and autopep8 for testing the pipe mode
           pip install black || true
           pip install autopep8 || true
@@ -33,8 +35,6 @@ jobs:
           # exit-zero treats all errors as warnings.  The GitHub editor is 127 chars wide
           echo "flake8 BLK"
           flake8 durst --count --exit-zero --max-complexity=18 --statistics --select BLK
-      - name: Install from source (required for the pre-commit tests)
-        run: pip install ".[all]"
       - name: Test with pytest
         run: nosetests
   build-n-publish:
