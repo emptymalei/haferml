@@ -63,6 +63,86 @@ def get_value_in_dict_recursively(dictionary, path, ignore_path_fail=None):
             return None
 
 
+def update_dict_recursively(dictionary, key_path, value):
+    """
+    update or insert values to a dictionary recursively.
+
+    ```
+    >>> update_dict_recursively({}, ['a', 'b', 1, 2], 'this_value')
+    {'a': {'b': {1: {2: 'this_value'}}}}
+    ```
+
+    :param dict dictionary: the dictionary to be inserted into
+    :param list key_path: the path for the insertion value
+    :param item: value to be inserted
+    :returns: a dictionary with the inserted value
+    """
+    sub_dictionary = dictionary
+    for key in key_path[:-1]:
+        if key not in sub_dictionary:
+            sub_dictionary[key] = {}
+        sub_dictionary = sub_dictionary[key]
+
+    sub_dictionary[key_path[-1]] = value
+
+    return dictionary
+
+
+def get_all_paths_in_dict(dic, path=None):
+    """
+    Retrieve all the possible paths in a nested dictionary.
+
+    !!! warning
+        List dictionaries under keys are not supported.
+
+
+    ```
+    test_dict_small = {
+        "etl": {
+            "local": "this/is/local",
+            "name": "my_data.parquet",
+            "remote": "s3://my/remote"
+        },
+        "model": {
+            "artifacts": {
+                "predict": {
+                    "local": "this/is/local/predict",
+                    "remote": "s3://my/remote/predict"
+                }
+            }
+        }
+    }
+
+    all_paths = get_all_paths_in_dict(test_dict_small, [])
+    print(all_paths)
+    ```
+
+    We get
+
+    ```
+    [['etl', 'local'], ['etl', 'name'], ['etl', 'remote'], ['model', 'artifacts', 'predict', 'local'], ['model', 'artifacts', 'predict', 'remote']]
+    ```
+
+    :param obj: [description]
+    :type obj: [type]
+    :param path: [description]
+    :type path: [type]
+    :return: [description]
+    :rtype: [type]
+    """
+    if path is None:
+        path = []
+    if not isinstance(dic, dict):
+        return [path]
+    else:
+        ret = []
+        for k, v in dic.items():
+            ret.extend(get_all_paths_in_dict(v, path + [k]))
+        return ret
+
+
+
+
 ###############
 # Generic
 ###############
