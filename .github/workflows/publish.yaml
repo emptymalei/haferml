@@ -43,6 +43,7 @@ jobs:
       - name: Test with pytest
         run: nosetests
   build-n-publish:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
