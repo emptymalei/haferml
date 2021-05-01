@@ -153,6 +153,11 @@ class Config:
                     p_name_value = os.path.join(p_local_value, p_name_value)
                     _update_dict_recursively(config, p_local_parent_path + ["name_absolute"], p_name_value)
 
+    def __getitem__(self, item):
+        return self.get(item)
+
+    def __str__(self) -> str:
+        return f"{self.config}"
 
 
 
