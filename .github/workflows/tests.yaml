@@ -2,9 +2,18 @@ name: Test Code with Pip
 
 on:
   push:
-      branches:
-        - "**"
-        - "!gh-pages"
+    branches:
+      - "**"
+      - "!gh-pages"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Test It'
+        required: false
+        default: 'I Just wanna test it'
 
 jobs:
   build:
