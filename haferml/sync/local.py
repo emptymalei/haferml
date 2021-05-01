@@ -26,7 +26,7 @@ def prepare_folders(folder_list=None, base_folder=None):
         pass
     elif isinstance(folder_list, str):
         logger.warning(f"Converting to list: {folder_list} to a list")
-        folder = [folder_list]
+        folder_list = [folder_list]
 
     for folder in folder_list:
         folder = os.path.join(base_folder, folder)
