@@ -111,4 +111,4 @@ nav:
       - "utils.sugar": references/utils/sugar.md
     - "Lab":
       - "Lab": references/lab/index.md
-
+  - "Changelog": changelog.md

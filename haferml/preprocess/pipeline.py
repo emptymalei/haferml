@@ -10,7 +10,7 @@ class BasePreProcessor(OrderedProcessor):
     The following example demonstrates how to use it.
 
     ```python
-    from haferml.data.preprocessing.ingredients import OrderedProcessor, attributes
+    from haferml.preprocess.ingredients import BaseProcessor, attributes
 
     class DemoPreProcessor(BasePreProcessor):
         def __init__(self, config, columns, cutoff_timestamp=None):
@@ -91,17 +91,15 @@ class BasePreProcessor(OrderedProcessor):
         "a": pd.DataFrame([{"names": "Tima Cook", "requirements": "I need it"}]),
         "b": pd.DataFrame([{"names": "Time Cook", "requirements": None}])
     }
-    dp.preprocess(dataset)
+    dp.run(dataset)
     ```
     """
 
-    def __init__(self, config, columns):
-        super(BasePreProcessor, self).__init__(config=config, columns=columns)
+    def __init__(self, config, **params):
+        super(BasePreProcessor, self).__init__(config=config, **params)
 
         self.config = self.params.get("config")
         logger.info(f"Applying config:\n{self.config}")
-        self.columns = self.params.get("columns")
-        logger.info(f"Applying columns:\n{self.columns}")
 
     def merge_datasets(self, datasets):
         """
@@ -113,9 +111,9 @@ class BasePreProcessor(OrderedProcessor):
 
         raise NotImplementedError("Please implement this method!")
 
-    def preprocess(self, datasets, **params):
+    def run(self, datasets, **params):
         """
-        preprocess connects the transforms into pipelines
+        run connects the transforms into pipelines
 
         :param datasets: input datasets as list or dict of single dataframe
         :param merge: whether and how to merge datasets: True or False
@@ -146,7 +144,7 @@ class BasePreProcessor(OrderedProcessor):
         # Go through the transforms
         for t in self.transforms:
             logger.info(f"Performing {t} ...")
-            self.transforms[t](dataframe)
+            dataframe = self.transforms[t](dataframe)
             logger.info(f"{t} is done.")
 
         return dataframe
@@ -161,6 +159,7 @@ if __name__ == "__main__":
             super(DemoPreProcessor, self).__init__(config=config, columns=columns)
 
             self.cutoff_timestamp = cutoff_timestamp
+            self.columns = columns
 
         def merge_datasets(self, datasets):
             """
