@@ -63,7 +63,7 @@ def setup():
         version=PACKAGE_VERSION,
         description=PACKAGE_DESCRIPTION,
         long_description=PACKAGE_LONG_DESCRIPTION,
-        long_description_content_type='text/markdown',
+        long_description_content_type="text/markdown",
         url=PACKAGE_URL,
         author="L Ma",
         author_email="hi@leima.is",
@@ -74,6 +74,7 @@ def setup():
         test_suite="nose.collector",
         tests_require=["nose"],
         extras_require=get_extra_requires("requirements.extras.txt"),
+        entry_points={"console_scripts": ["haferml=haferml.command:haferml"]},
         zip_safe=False,
     )
 

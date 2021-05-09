@@ -139,8 +139,6 @@ def get_all_paths_in_dict(dic, path=None):
         return ret
 
 
-
-
 ###############
 # Generic
 ###############
