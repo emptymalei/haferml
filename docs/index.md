@@ -4,6 +4,8 @@ The HomemAde FramEwoRk for Machine Learning (HAFER ML).
 
 > Hafer is oat in German.
 
+![](assets/linkedin_banner_image_2.png)
+
 ## Install
 
 ```
