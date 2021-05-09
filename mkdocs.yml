@@ -118,6 +118,8 @@ nav:
     - "Utils":
       # - "Utils": references/utils/index.md
       - "utils.sugar": references/utils/sugar.md
+    - "Commandline":
+      - "Commandline Tool": references/command/index.md
     - "Lab":
       - "Lab": references/lab/index.md
   - "Changelog": changelog.md
