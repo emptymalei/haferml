@@ -62,9 +62,7 @@ class DataSetX(DataSet):
         _export_train_test_data saves train and test datasets
         """
 
-        dataset_folder = construct_paths(
-            self.artifacts["dataset"], base_folder=self.base_folder
-        )["local"]
+        dataset_folder = self.artifacts["dataset"]["local_absolute"]
 
         ## Save the train and test datasets
         logger.info("Export test and train data")
@@ -77,12 +75,12 @@ class DataSetX(DataSet):
         )
 
         self._save_data(
-            pd.DataFrame(self.y_train, columns=self.pred_cols),
+            pd.DataFrame(self.y_train, columns=self.targets),
             os.path.join(dataset_folder, "model_y_train.parquet"),
         )
 
         self._save_data(
-            pd.DataFrame(self.y_test, columns=self.pred_cols),
+            pd.DataFrame(self.y_test, columns=self.targets),
             os.path.join(dataset_folder, "model_y_test.parquet"),
         )
 
@@ -101,7 +99,7 @@ class ModelSetX(ModelSet):
     """
 
     def __init__(self, config, base_folder):
-        super(ModelSet, self).__init__(config, base_folder)
+        super(ModelSetX, self).__init__(config, base_folder)
 
         self.targets = self.config.get("targets")
         self.features = self.config.get("features")
@@ -137,10 +135,7 @@ class ModelWorkflowX(ModelWorkflow):
     """
 
     def __init__(self, config, dataset, modelset, base_folder):
-        self.config = config
-        self.base_folder = base_folder
-        self.DataSet = dataset
-        self.ModelSet = modelset
+        super(ModelWorkflowX, self).__init__(config, dataset, modelset, base_folder)
         self.artifacts = self.config["artifacts"]
 
     def fit_and_report(self):
@@ -159,7 +154,7 @@ class ModelWorkflowX(ModelWorkflow):
         )
 
         self.report = {
-            "hyperparameters": self.ModelSet.hyperparams_grid,
+            "hyperparameters": self.ModelSet.hyperparameters,
             "best_params": self.ModelSet.model.best_params_,
             "cv_results": self.ModelSet.model.cv_results_,
         }
@@ -170,11 +165,9 @@ class ModelWorkflowX(ModelWorkflow):
         """
         export_results saves the necessary artifacts
         """
-        model_artifacts = construct_paths(
-            self.artifacts["model"], base_folder=self.base_folder
-        )
-        model_folder = model_artifacts["local"]
-        model_path = model_artifacts["file_path"]
+        model_artifacts = self.artifacts["model"]
+        model_folder = model_artifacts["local_absolute"]
+        model_path = model_artifacts["name_absolute"]
 
         if not os.path.exists(model_folder):
             os.makedirs(model_folder)

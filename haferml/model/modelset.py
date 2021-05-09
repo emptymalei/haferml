@@ -17,7 +17,7 @@ class ModelSet:
         self.base_folder = base_folder
 
         logger.debug(
-            f"base folder: {self.base_folder}\n" f"artifacts configs: {self.artifacts}"
+            f"base folder: {self.base_folder}\n" f"configs: {self.config}"
         )
 
     def create_model(self):
