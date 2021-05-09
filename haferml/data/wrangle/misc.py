@@ -74,7 +74,7 @@ def update_dict_recursively(dictionary, key_path, value):
 
     :param dict dictionary: the dictionary to be inserted into
     :param list key_path: the path for the insertion value
-    :param item: value to be inserted
+    :param value: value to be inserted
     :returns: a dictionary with the inserted value
     """
     sub_dictionary = dictionary
@@ -123,12 +123,10 @@ def get_all_paths_in_dict(dic, path=None):
     [['etl', 'local'], ['etl', 'name'], ['etl', 'remote'], ['model', 'artifacts', 'predict', 'local'], ['model', 'artifacts', 'predict', 'remote']]
     ```
 
-    :param obj: [description]
-    :type obj: [type]
-    :param path: [description]
-    :type path: [type]
-    :return: [description]
-    :rtype: [type]
+    :param dic: dictionary to be get data from
+    :type dic: dict
+    :param path: path of keys to extract value
+    :type path: list
     """
     if path is None:
         path = []
