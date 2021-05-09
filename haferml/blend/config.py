@@ -2,7 +2,9 @@ import os
 from loguru import logger
 import simplejson as json
 from haferml.data.wrangle.misc import get_all_paths_in_dict as _get_all_paths_in_dict
-from haferml.data.wrangle.misc import update_dict_recursively as _update_dict_recursively
+from haferml.data.wrangle.misc import (
+    update_dict_recursively as _update_dict_recursively,
+)
 
 
 def load_config(config_path, base_folder=None):
@@ -91,6 +93,7 @@ class Config:
     :param base_folder: the base folder for our working directory, defaults to None
     :type base_folder: str, optional
     """
+
     def __init__(self, config, base_folder=None):
 
         if base_folder is not None:
@@ -103,7 +106,9 @@ class Config:
         elif isinstance(config, dict):
             self.config = config
         else:
-            raise Exception(f"Input config is not supported, should be path or dict: {config}")
+            raise Exception(
+                f"Input config is not supported, should be path or dict: {config}"
+            )
 
         self._enhance_local_paths(self.config, base_folder=self.base_folder)
 
@@ -145,23 +150,20 @@ class Config:
 
                 if base_folder is not None:
                     p_local_value = os.path.join(base_folder, p_local_value)
-                _update_dict_recursively(config, p_local_parent_path + ["local_absolute"], p_local_value)
+                _update_dict_recursively(
+                    config, p_local_parent_path + ["local_absolute"], p_local_value
+                )
 
                 p_local_parent_value = get_config(config, p_local_parent_path)
                 if "name" in p_local_parent_value:
                     p_name_value = p_local_parent_value["name"]
                     p_name_value = os.path.join(p_local_value, p_name_value)
-                    _update_dict_recursively(config, p_local_parent_path + ["name_absolute"], p_name_value)
+                    _update_dict_recursively(
+                        config, p_local_parent_path + ["name_absolute"], p_name_value
+                    )
 
     def __getitem__(self, item):
         return self.get(item)
 
     def __str__(self) -> str:
         return f"{self.config}"
-
-
-
-
-
-
-

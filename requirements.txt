@@ -3,3 +3,4 @@ scipy>=1.2.1
 loguru>=0.5.3
 click>=7.1.2
 simplejson>=3.17.2
+inquirer>=2.7.0
