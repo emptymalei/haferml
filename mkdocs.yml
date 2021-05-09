@@ -73,7 +73,9 @@ plugins:
 
 nav:
   - "Home": index.md
-  - "Tutorials": tutorials/index.md
+  - "Tutorials":
+    - "Tutorials": tutorials/index.md
+    - "Rideindego": tutorials/rideindego/index.md
   - References:
     - "Introduction": references/index.md
     - "Data":
