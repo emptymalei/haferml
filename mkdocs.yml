@@ -4,7 +4,7 @@ site_author: L Ma
 site_description: "HAFER ML"
 site_url: "https://emptymalei.github.io/haferml"
 repo_url: "https://github.com/emptymalei/haferml"
-edit_uri: "blob/master/docs/"
+edit_uri: "blob/main/docs/"
 repo_name: "emptymalei/haferml"
 
 
@@ -36,9 +36,9 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  favicon: assets/favicon.png
-  icon:
-    logo: logo
+  favicon: assets/logo.png
+  logo: assets/logo_badge.svg
+
 
 
 markdown_extensions:
