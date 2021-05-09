@@ -116,7 +116,7 @@ class BasePreProcessor(OrderedProcessor):
         run connects the transforms into pipelines
 
         :param datasets: input datasets as list or dict of single dataframe
-        :param merge: whether and how to merge datasets: True or False
+        :param params: for example, `merge=True` can be used to indicate whether and how to merge datasets which will run the method `merge_datasets(datasets)`
         """
 
         if params.get("merge") is True:
