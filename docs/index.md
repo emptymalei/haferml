@@ -26,7 +26,7 @@ The extras options:
 
 ## The Idea
 
-The Hafer ML frameworks is designed to be a minimal framework for data scientists. Hafer ML uses config files and saves the artifacts at every step for reproducibility.
+The Hafer ML framework is designed to be a minimal framework for data scientists. Hafer ML uses config files and saves the artifacts at every step for reproducibility.
 
 ![](https://datumorphism.leima.is/blog/data-science/assets/a-simple-machine-learning-framework/simple_framework_ml_projects.png)
 
