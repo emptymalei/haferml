@@ -9,10 +9,16 @@ from haferml.data.wrangle.misc import (
 
 def load_config(config_path, base_folder=None):
     """
-    load_config loads the config files of the project
+    load_config loads the config files of the project from a path and generate a dictionary.
 
-    :param config_path: path to the config file
-    :type config_path: str, optional
+    If no `base_folder` is not specified, the path will be treated as it is. For example,
+    `config_path=a/b/c.json` will be a file relative to the python work directory; while
+    `config_path=/a/b/c.json` will be the absolute path.
+
+
+    :param str config_path: path to the config file
+    :param str base_folder: the base folder of the whole project
+    :param base_folder: str, optional
     """
     if config_path is None:
         raise Exception(f"config_path has not been specified...")
@@ -39,13 +45,14 @@ def get_config(configs, path):
     """
     Get value of the configs under specified path
 
-    :param dict configs: input dictionary
-    :param list path: path to the value to be obtained
-
     ```
     >>> get_config({'etl':{'raw':{'local':'data/raw', 'remote': 's3://haferml-tutorials/rideindego/marshall/data/raw'}}},['etl','raw'])
     {'local':'data/raw', 'remote': 's3://haferml-tutorials/rideindego/marshall/data/raw'}
     ```
+
+    :param dict configs: input dictionary
+    :param list path: path to the value to be obtained
+
     """
 
     # Construct the path
@@ -63,9 +70,29 @@ def get_config(configs, path):
 
 def construct_paths(config, base_folder):
     """
-    construct_paths reconstructs the path based on base folder
+    construct_paths reconstructs the path based on base folder.
 
-    The `local` key will be replaced with the
+    The `local` key in `config` will be used. Typically, the config shall be something like
+
+    ```
+    config = {
+        "local": "gauss/data",
+        "name": "my_data.parquet"
+    }
+    ```
+
+    If the base folder is `base_folder=/tmp`, the config will become
+
+    ```
+    config = {
+        "local": "/tmp/gauss/data",
+        "name": "my_data.parquet",
+        "file_path": "/tmp/gauss/data/my_data.parquet"
+    }
+    ```
+
+    :param dict config: the config dictionary that contains a `local` key
+    :param str base_folder: base folder that will be prepended to the path in `config["local"]`
     """
 
     if not config.get("local"):
@@ -87,6 +114,13 @@ def construct_paths(config, base_folder):
 class Config:
     """
     Config makes it easy to load and use config files.
+
+    A Config object will load the config file and enhance the paths, e.g., prepend the base folder, if needed. The config object can also be used like a dictionary or even more convinently using a list as the path to the value.
+
+    ```
+    conf = Config(file_path="test.json", base_folder="/tmp")
+    conf[["etl", "raw"]]
+    ```
 
     :param file_path: path to the config file. If the path is relative path, please specify the base folder.
     :type file_path: str

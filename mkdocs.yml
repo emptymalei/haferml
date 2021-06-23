@@ -75,8 +75,14 @@ nav:
   - "Home": index.md
   - "Tutorials":
     - "Tutorials": tutorials/index.md
+    - "Data Manipulation":
+      - "Introduction": tutorials/data_manipulation/index.md
+    - "Building Models":
+      - "Introduction": tutorials/build_models/index.md
+    - "Perservation":
+      - "Introduction": tutorials/preservation/index.md
     - "Rideindego":
-      - "Rideindego": tutorials/rideindego/index.md
+      - "Introduction": tutorials/rideindego/index.md
       - "Config": tutorials/rideindego/config.md
       - "Extract": tutorials/rideindego/extract.md
       - "Transform": tutorials/rideindego/transform.md

@@ -9,7 +9,30 @@ from loguru import logger
 
 class Transformer:
     """
-    Base Transformer of a single data record
+    Base Transformer of a single data record.
+
+    This transformer can use a schema specification `schema` and also built-in methods to
+    transform the data.
+
+    A schema can have the following structure.
+
+    ```
+    schema = [
+        {
+            "column_name": "abc",
+            "type": "string"
+        },
+        {
+            "column_name": "def",
+            "type": "list"
+        }
+    ]
+    ```
+
+    The "type" values will be used by the universal transformer method `_universal_transformer`.
+
+    A method with the name like `_transformer__abc` will be used to transform the column `abc`. If such method exists, this method will be used otherwise the universal transformer will be used and the transformation will be done based on the `"type"` of the column specified in the schema.
+
     """
 
     def __init__(self, schema, use_schema_column=None):
