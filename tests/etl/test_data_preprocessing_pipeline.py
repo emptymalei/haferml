@@ -1,6 +1,7 @@
 import pandas as pd
-from haferml.data.preprocessing.ingredients import attributes
-from haferml.data.preprocessing.pipeline import BasePreProcessor
+from haferml.preprocess.ingredients import attributes
+from haferml.preprocess.pipeline import BasePreProcessor
+from loguru import logger
 
 
 class DemoPreProcessor(BasePreProcessor):
@@ -8,6 +9,7 @@ class DemoPreProcessor(BasePreProcessor):
         super(DemoPreProcessor, self).__init__(config=config, columns=columns)
 
         self.cutoff_timestamp = cutoff_timestamp
+        self.columns = columns
 
     def merge_datasets(self, datasets):
         """
@@ -38,12 +40,18 @@ class DemoPreProcessor(BasePreProcessor):
 
         dataset["names"] = dataset.names.replace("Tima", "Tim")
 
+        return dataset
+
     @attributes(order=2)
     def _convert_requirement_to_bool(self, dataset):
+
+        logger.info(f"Dataset is :\n{dataset}")
 
         dataset["requirements"] = dataset.requirements.apply(
             lambda x: False if pd.isnull(x) else True
         )
+
+        return dataset
 
     @attributes(order=12)
     def _filter_columns_and_crossing(self, dataset):
@@ -72,6 +80,8 @@ class DemoPreProcessor(BasePreProcessor):
                     fc_series = fc_series * dataset[fc_col]
                 dataset[fc] = fc_series
 
+        return dataset
+
 
 dp = DemoPreProcessor(
     config={}, columns=["names", "requirements", "names__requirements"]
@@ -80,4 +90,4 @@ dataset = {
     "a": pd.DataFrame([{"names": "Tima Cook", "requirements": "I need it"}]),
     "b": pd.DataFrame([{"names": "Time Cook", "requirements": None}]),
 }
-dp.preprocess(dataset)
+dp.run(dataset)

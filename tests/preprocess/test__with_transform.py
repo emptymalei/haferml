@@ -1,5 +1,5 @@
-from haferml.data.preprocessing.ingredients import attributes
-from haferml.data.preprocessing.ingredients import with_transforms
+from haferml.preprocess.ingredients import attributes
+from haferml.preprocess.ingredients import with_transforms
 from loguru import logger
 
 
