@@ -27,6 +27,10 @@ mkdocs-autorefs = "^0.5.0"
 awscli = "^1.29.72"
 boto3 = "^1.28.72"
 
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.3"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
