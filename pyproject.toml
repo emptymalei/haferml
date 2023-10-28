@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "haferml"
+version = "0.0.13"
+description = "The Hafer ML frameworks is designed to be a minimal framework for data scientists. Hafer ML uses config files and saves the artifacts at every step for reproducibility."
+authors = ["LM <hi@leima.is>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+pandas = ">=1.2.0"
+scipy = ">=1.2.1"
+loguru = ">=0.5.3"
+click = ">=7.1.2"
+simplejson = ">=3.17.2"
+inquirer = ">=2.7.0"
+joblib = ">=1.0.1"
+
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = "^9.4.6"
+mkdocstrings = "^0.23.0"
+mkdocs-autorefs = "^0.5.0"
+
+
+[tool.poetry.group.aws.dependencies]
+awscli = "^1.29.72"
+boto3 = "^1.28.72"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
