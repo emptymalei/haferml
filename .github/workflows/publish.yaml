@@ -1,9 +1,12 @@
 name: Build and Publish Package to Pypi
 
 on:
-  push:
-    branches:
-        - "main"
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'release it'
+        required: false
+        default: 'I Just wanna release it'
 
 jobs:
   tests:

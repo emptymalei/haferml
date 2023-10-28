@@ -4,19 +4,32 @@ on:
     branches:
       - master
       - main
+  workflow_dispatch:
+    inputs:
+      whotriggered:
+        description: 'Manually Build Docs'
+        default: 'Just want to build it'
+        required: false
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
         with:
-          python-version: 3.x
-      - run: pip install mkdocs
-      - run: pip install mkdocs-material
-      - run: pip install mkdocs-material-extensions
-      - run: pip install mkdocs-autorefs
-      - run: pip install mkdocstrings
-      - run: pip install -e ".[all]"
-      - run: mkdocs gh-deploy --force
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.3.2
+      - name: Install Packages
+        run: poetry install
+      - run: git config user.name 'github-actions[bot]' && git config user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: Deploy
+        run: poetry run mkdocs gh-deploy --force

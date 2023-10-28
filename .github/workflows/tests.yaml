@@ -1,4 +1,4 @@
-name: Test Code with Pip
+name: Test Code
 
 on:
   push:
@@ -15,40 +15,64 @@ on:
         required: false
         default: 'I Just wanna test it'
 
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+
 jobs:
-  build:
+  test:
     strategy:
       matrix:
-        python-version: [3.7, 3.8]
+        python-version: [3.9.16, 3.10.8]
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install from source (required for the pre-commit tests)
-        run: pip install ".[all]"
-      - name: Install dependencies
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.3.2
+      - name: Install
+        run: poetry install
+      - name: Build coverage file
         run: |
-          # python -m pip install --upgrade pip
-          # pip install -r requirements.txt
-          # install black if available (Python 3.6 and above), and autopep8 for testing the pipe mode
-          pip install black || true
-          pip install autopep8 || true
-      - name: Lint with flake8
+          poetry run pytest --cache-clear --junitxml=test_results/${{ matrix.os }}/pytest_report_${{ matrix.python-version }}.xml tests/
+      - name: Check files
         run: |
-          pip install flake8==3.8.3
-          pip install flake8-black==0.2.1
-          # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # all Python files should follow PEP8
-          # echo "flake8 all python"
-          # flake8 durst tests
-          # exit-zero treats all errors as warnings.  The GitHub editor is 127 chars wide
-          echo "flake8 BLK"
-          flake8 durst --count --exit-zero --max-complexity=18 --statistics --select BLK
-      - name: Test with pytest
-        run: nosetests
+          ls -l test_results/
+          ls -l test_results/${{ matrix.os }}/
+      - name: Upload Test Results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-results-${{ matrix.python-version }}
+          path: test_results/${{ matrix.os }}/pytest_report_${{ matrix.python-version }}.xml
+      # - name: Comment coverage
+      #  uses: coroo/pytest-coverage-commentator@v1.0.2
+
+  publish-test-results:
+    name: "Publish Tests Results"
+    needs: test
+    runs-on: ubuntu-latest
+    # the build-and-test job might be skipped, we don't need to run this job then
+    if: success() || failure()
+
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+      - name: Check files
+        run: |
+          ls -l artifacts/
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          junit_files: "artifacts/**/*.xml"
