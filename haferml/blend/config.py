@@ -5,6 +5,8 @@ from haferml.data.wrangle.misc import get_all_paths_in_dict as _get_all_paths_in
 from haferml.data.wrangle.misc import (
     update_dict_recursively as _update_dict_recursively,
 )
+from cloudpathlib import AnyPath
+import json
 
 
 def load_config(config_path, base_folder=None):
@@ -201,3 +203,36 @@ class Config:
 
     def __str__(self) -> str:
         return f"{self.config}"
+
+
+class TrainConfig:
+    """Config for training stage
+    """
+    def __init__(self, config_path: AnyPath):
+        self.config_path = config_path
+
+    def init(self) -> None:
+        with open(self.config_path, "w") as fp:
+            json.dump({}, fp, indent=4)
+
+    @property
+    def config(self):
+        with open(self.config_path, "r") as fp:
+            return json.load(fp)
+        
+    def save(self, config: dict) -> None:
+        with open(self.config_path, "w") as fp:
+            json.dump(config, fp, indent=4)
+
+    def save_as(self, path: AnyPath) -> None:
+        with open(path, "w") as fp:
+            logger.debug(f"Saving config to {path}...")
+            json.dump(self.config, fp, indent=4)
+
+    def update(self, data: dict, return_value: bool = False) -> dict:
+        config = self.config
+        config.update(data)
+        self.save(config)
+        
+        if return_value:
+            return config

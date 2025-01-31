@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "haferml"
+version = "0.0.13"
+description = "The HomemAde FramEwoRk for Machine Learning (HAFER ML) is a minimal and unambitious framework for your machine learning projects, with reproducibility in mind."
+authors = ["LM <hi@leima.is>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.2.3"
+scipy = "^1.15.1"
+loguru = "^0.7.3"
+click = "^8.1.8"
+simplejson = "^3.19.3"
+inquirer = "^3.4.0"
+joblib = "^1.4.2"
+cloudpathlib = "^0.20.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+
+
+[tool.poetry.group.docs.dependencies]
+mkdocstrings = {version = "^0.25.2", extras = ["python"]}
+mkdocs-material = "^9.6.1"
+mkdocs-autorefs = "^1.3.0"
+
+
+[tool.poetry.group.aws.dependencies]
+awscli = "^1.37.10"
+boto3 = "^1.36.10"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
