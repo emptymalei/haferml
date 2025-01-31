@@ -16,6 +16,7 @@ simplejson = "^3.19.3"
 inquirer = "^3.4.0"
 joblib = "^1.4.2"
 cloudpathlib = "^0.20.0"
+pydantic = "^2.10.6"
 
 
 [tool.poetry.group.dev.dependencies]

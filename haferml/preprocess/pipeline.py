@@ -1,6 +1,8 @@
 import pandas as pd
 from haferml.preprocess.ingredients import OrderedProcessor, attributes
 from loguru import logger
+from pydantic import BaseModel
+import abc
 
 
 class BasePreProcessor(OrderedProcessor):
@@ -150,6 +152,22 @@ class BasePreProcessor(OrderedProcessor):
         return dataframe
 
 
+class SimpleProcessor(abc.ABC):
+    """
+    SimpleProcessor is a simple interface for a preprocessor.
+
+    :param params: a pydantic BaseModel that contains the configurations.
+    """
+
+    def __init__(self, params: BaseModel, **kwargs):
+        self.params = params
+        self.kwargs = kwargs
+
+    @abc.abstractmethod
+    def __call__(self, dataframe: pd.DataFrame) -> pd.DataFrame:
+        raise NotImplementedError("Please implement this method!")
+
+
 if __name__ == "__main__":
 
     from haferml.preprocess.ingredients import attributes
@@ -231,4 +249,4 @@ if __name__ == "__main__":
         "a": pd.DataFrame([{"names": "Tima Cook", "requirements": "I need it"}]),
         "b": pd.DataFrame([{"names": "Time Cook", "requirements": None}]),
     }
-    dp.preprocess(dataset)
+    dp.run(dataset)
