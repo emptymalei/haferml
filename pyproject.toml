@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "haferml"
 version = "0.0.13"
-description = "The HomemAde FramEwoRk for Machine Learning (HAFER ML) is a minimal and unambitious framework for your machine learning projects, with reproducibility in mind."
+description = "The Hafer ML frameworks is designed to be a minimal framework for data scientists. Hafer ML uses config files and saves the artifacts at every step for reproducibility."
 authors = ["LM <hi@leima.is>"]
 license = "MIT"
 readme = "README.md"
