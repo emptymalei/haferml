@@ -230,7 +230,7 @@ class SortbyColumn(TransformBase):
 
 
 class RollingMedian(TransformBase):
-    """rolling mean based on column"""
+    """rolling median based on column"""
 
     def __init__(self, column_names: str, window_size: int, min_periods: int = 1):
         self.column_names = column_names
