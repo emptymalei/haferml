@@ -90,7 +90,7 @@ class Shuffle(TransformBase):
 class ConvertCategoricalType(TransformBase):
     """Convert a column to categorical
 
-    :param dt_column: the original datatime column
+    :param dt_column: the original datetime column
     :param target_column: the column to write to.
     Default is to overwrite original dt_column
     """
