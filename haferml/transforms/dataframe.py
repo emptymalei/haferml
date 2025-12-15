@@ -56,7 +56,7 @@ class ConcatTransform(TransformBase):
 class Identity(TransformBase):
     """Returns the original dataframe
 
-    This is useful when suming up a lot of transformations.
+    This is useful when summing up a lot of transformations.
 
     For example, if I have a list of `TransformBase` transformations
 
