@@ -2,7 +2,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 import pandas as pd
 from typing import List, Union, Callable, Any
-from loguru imort logger
+from loguru import logger
 
 
 class TransformBase(ABC):
